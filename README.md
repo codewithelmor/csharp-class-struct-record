@@ -93,6 +93,55 @@ var person2 = person1 with { Age = 31 };
 - Data that should be compared by value, not reference.
 - Functional programming scenarios.
 
+### Shortcut (Positional Record)
+
+This is the most concise way to declare a `record`, where properties are defined in the constructor-like parameter list.
+
+```csharp
+public record Person(string FirstName, string LastName);
+```
+
+#### Features of Positional Record:
+* Automatically creates `init`-only properties.
+* Provides value-based equality and deconstruction.
+* Generates `ToString`, `Equals`, `GetHashCode`, and `Deconstruct` automatically.
+
+#### Usage Example:
+```csharp
+var person = new Person("John", "Doe");
+Console.WriteLine(person.FirstName); // John
+Console.WriteLine(person);           // Person { FirstName = John, LastName = Doe }
+```
+
+### Standard (Full Declaration)
+
+If you want to define properties manually or add more logic, you can write a `standard record`.
+
+```csharp
+public record Person
+{
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+}
+```
+
+#### Usage Example:
+```csharp
+var person = new Person { FirstName = "John", LastName = "Doe" };
+Console.WriteLine(person.FirstName); // John
+Console.WriteLine(person);           // Person { FirstName = John, LastName = Doe }
+```
+
+### 🚀 Quick Summary Table
+
+| Feature                           | Shortcut (Positional)                     | Standard (Full)                          |
+|-----------------------------------|------------------------------------------|------------------------------------------|
+| Syntax                            | `public record Person(string Name);`    | `public record Person { string Name { get; init; } }` |
+| Auto-generated `init` properties   | ✅                                        | ❌ (You write them)                      |
+| Easy deconstruction                | ✅                                        | ✅                                        |
+| Custom logic in properties/methods | ❌ (unless you extend it)                 | ✅                                        |
+| Use case                          | Simple data models                       | Complex models needing logic             |
+
 ## 4. Summary Table
 
 | Feature                 | Class           | Struct            | Record                       |
